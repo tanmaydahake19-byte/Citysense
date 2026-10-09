@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Place, SafetyIncident, NeighborhoodStats, CitizenReport, SafeRouteOption, WeatherInsight, AIChatMessage, PlaceCategory } from "@/types";
+import { MarkerCategory } from "@/data/locations";
 import { MOCK_PLACES, MOCK_SAFETY_INCIDENTS, MOCK_NEIGHBORHOODS, MOCK_CITIZEN_REPORTS, MOCK_SAFE_ROUTES, INITIAL_WEATHER } from "@/data/mockData";
 
 export type NavTab = 'explore' | 'safety' | 'matrix' | 'feed' | 'routes';

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useCitySenseStore } from "@/lib/store";
 import { CATEGORY_CONFIG, MarkerCategory } from "@/data/locations";
 import { DynamicLocation, geocodeCity, fetchCityPOIs, findPresetCity } from "@/lib/citySearch";
+import { PRESET_CITIES } from "@/data/cityDatabase";
 import { Layers, ShieldAlert, Compass, Map as MapIcon, Search, Loader2, X, Navigation, Sparkles, MapPin } from "lucide-react";
 
 // ── Satellite Icon ────────────────────────────────────────────────────────────
@@ -205,7 +206,7 @@ export const CityMap: React.FC<CityMapProps> = ({ initialLat, initialLng, initia
     // Add visual traffic corridors if locations exist
     if (trafficLayerRef.current && locations.length >= 4) {
       const topLocations = locations.slice(0, 5);
-      const latlngs = topLocations.map((l) => [l.lat, l.lng]);
+      const latlngs: [number, number][] = topLocations.map((l) => [l.lat, l.lng]);
       L.polyline(latlngs, {
         color: "#06b6d4",
         weight: 4,
@@ -398,7 +399,7 @@ export const CityMap: React.FC<CityMapProps> = ({ initialLat, initialLng, initia
       } else if (markerRegistryRef.current.has(keyCoords)) {
         foundEntry = markerRegistryRef.current.get(keyCoords)!;
       } else {
-        for (const [key, val] of markerRegistryRef.current.entries()) {
+        for (const [key, val] of Array.from(markerRegistryRef.current.entries())) {
           if (key.includes(keyName) || keyName.includes(key)) {
             foundEntry = val;
             break;
